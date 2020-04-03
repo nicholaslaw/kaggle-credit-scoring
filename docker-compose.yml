@@ -1,0 +1,17 @@
+version: '3.5'
+
+services:
+
+  credit-scoring:
+    image: credit:1.0
+    build:
+      context: .
+    command:
+      - /bin/sh
+      - -c
+      - |
+        jupyter notebook --NotebookApp.token='password' --ip=0.0.0.0 --allow-root
+    volumes:
+      - .:/app
+    ports:
+      - "8889:8888"
