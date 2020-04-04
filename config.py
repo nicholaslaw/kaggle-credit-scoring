@@ -4,7 +4,8 @@ FOLDERS = {
     "preprocess": "./data/",
     "train": "./model_output/"
 }
-for folder in FOLDERS.keys():
+
+for folder in FOLDERS.values():
     if not os.path.exists(folder):
         os.makedirs(folder)
 
@@ -24,7 +25,7 @@ TRAIN_CONFIGS = {
     },
     "save": {
         "model": FOLDERS["train"] + "model.p"
-    }
+    },
     "model_params": {
         'min_child_weight': list(range(1,10,2)),
         'gamma':[i/10.0 for i in range(0,5)],

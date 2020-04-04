@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-from config import PREPROCESS_CONFIGS
+import joblib
+from config import PREPROCESS_CONFIGS, FOLDERS
 
 LOAD = PREPROCESS_CONFIGS["load"]
 SAVE = PREPROCESS_CONFIGS["save"]
@@ -12,7 +13,7 @@ print("Done...\n")
 
 # Preprocess Data
 print("Preprocessing Data...")
-df = pd.read_csv("cs-training.csv")
+df = pd.read_csv(LOAD["raw_data"])
 df = df.drop("Unnamed: 0", axis=1)
 df = df.loc[df["DebtRatio"] <= df["DebtRatio"].quantile(0.86)]
 df = df.loc[(df["RevolvingUtilizationOfUnsecuredLines"] >= 0) & (df["RevolvingUtilizationOfUnsecuredLines"] < 13)]

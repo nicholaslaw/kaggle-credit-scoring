@@ -4,7 +4,7 @@ import joblib
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import StratifiedKFold, RandomizedSearchCV
 from xgboost import XGBClassifier
-from config import TRAIN_CONFIGS
+from config import TRAIN_CONFIGS, FOLDERS
 
 LOAD = TRAIN_CONFIGS["load"]
 SAVE = TRAIN_CONFIGS["save"]
@@ -19,7 +19,8 @@ print("Done...\n")
 # Train Model
 print("Training Model...")
 xgb = XGBClassifier(random_state=0)
-model = RandomizedSearchCV(xgb, param_distributions=TRAIN_CONFIGS["model_params"], n_iter=100, scoring='roc_auc', n_jobs=-1, cv=StratifiedKFold(n_splits=5, shuffle = True, random_state = 0), verbose=3, random_state=0)
+# model = RandomizedSearchCV(xgb, param_distributions=TRAIN_CONFIGS["model_params"], n_iter=100, scoring='roc_auc', n_jobs=-1, cv=StratifiedKFold(n_splits=5, shuffle = True, random_state = 0), verbose=3, random_state=0)
+model = xgb
 model.fit(X, Y, eval_metric="auc")
 print("Done...\n")
 

@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
-from config import PRED_CONFIGS
+import joblib
+from config import PRED_CONFIGS, FOLDERS
 
 LOAD = PRED_CONFIGS["load"]
 SAVE = PRED_CONFIGS["save"]
