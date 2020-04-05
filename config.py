@@ -16,7 +16,8 @@ PREPROCESS_CONFIGS = {
     "save": {
         "preprocessed_data": FOLDERS["preprocess"] + "preprocessed.csv",
         "imputation": FOLDERS["preprocess"] + "impute.p"
-    }
+    },
+    "impute": False
 }
 
 TRAIN_CONFIGS = {
@@ -48,5 +49,6 @@ PRED_CONFIGS = {
     },
     "save": {
         "predictions": FOLDERS["train"] + "predictions.csv"
-    }
+    },
+    "impute": PREPROCESS_CONFIGS["impute"]
 }

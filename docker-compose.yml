@@ -13,5 +13,6 @@ services:
         jupyter notebook --NotebookApp.token='password' --ip=0.0.0.0 --allow-root
     volumes:
       - .:/app
+    working_dir: /app
     ports:
       - "8889:8888"

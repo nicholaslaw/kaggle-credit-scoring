@@ -9,16 +9,22 @@ SAVE = PRED_CONFIGS["save"]
 # Import Essential Items
 print("Importing Essential Items...")
 test = pd.read_csv(LOAD["test_data"])
-impute_dic = joblib.load(open(LOAD["imputation"], "rb"))
 model = joblib.load(open(LOAD["model"], "rb"))
 print("Done...\n")
 
 # Preprocess Test Data
 print("Preprocessing Test Data...")
-test["MonthlyIncome"] = test["MonthlyIncome"].fillna(impute_dic["MonthlyIncome"]["median"])
-test["NumberOfDependents"] = test["NumberOfDependents"].fillna(impute_dic["NumberOfDependents"]["mode"])
-# np.random.seed(0)
-# test.loc[test["MonthlyIncome"].isnull()]["MonthlyIncome"] = np.random.normal(loc=impute_dic["MonthlyIncome"]["mean"], scale=impute_dic["MonthlyIncome"]["std"], size=len(test.loc[test["MonthlyIncome"].isnull()]))
+if PRED_CONFIGS["impute"]:
+    print("IMPUTE!")
+    impute_dic = joblib.load(open(LOAD["imputation"], "rb"))
+    test["NumberOfDependents"] = test["NumberOfDependents"].fillna(impute_dic["NumberOfDependents"]["mode"])
+    if "median" in impute_dic["MonthlyIncome"]:
+        print("MEDIAN")
+        test["MonthlyIncome"] = test["MonthlyIncome"].fillna(impute_dic["MonthlyIncome"]["median"])
+    else:
+        np.random.seed(0)
+        test.loc[test["MonthlyIncome"].isnull()]["MonthlyIncome"] = np.random.normal(loc=impute_dic["MonthlyIncome"]["mean"], scale=impute_dic["MonthlyIncome"]["std"], size=len(test.loc[test["MonthlyIncome"].isnull()]))
+print("Done...")
 
 # Generate Predictions
 print("Generating Predictions...")
